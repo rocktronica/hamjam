@@ -126,10 +126,11 @@
 var Rule = function(input){
 	this.value = input;
 	var parts = input.split(/@/);
+	this.active = false;
 	if (parts.length === 2) {
 		this.local = parts[0];
 		this.domain = parts[1];
-		this.deleted = false;
+		this.active = true;
 		this.url = this.domain.replace(/\*\./g, "").replace(/\*/g, "");
 		this.favicon = "http://www.google.com/s2/favicons?domain=" + this.url;
 	}
@@ -142,36 +143,47 @@ Rule.fn.toString = function() {
 };
 
 Rule.fn.delete = function() {
-	this.deleted = true;
+	this.active = false;
 };
 
 // Rules
 
 var Rules = function(input) {
-	this.items = [];
-	if (typeof input === "string") {
-		this.parseInputString(input);
-	}
+	this.init();
 };
 
 Rules.fn = Rules.prototype;
+
+Rules.fn.init = function() {
+	this.items = {};
+};
 
 Rules.fn.add = function(rule) {
 	if (typeof rule === "string") {
 		rule = new Rule(rule);
 	}
-	this.items.push(rule);
+	this.items[rule.value] = rule;
+	return this;
 }
 
 Rules.fn.parseInputString = function(input) {
+	this.init();
 	input.split(/\|/g).forEach(this.add.bind(this));
 };
 
-Rules.fn.alphabetize = function() {
+Rules.fn.toArray = function() {
+	var items = [];
+	for (key in this.items) {
+		items.push(this.items[key]);
+	}
+	return items;
+};
+
+Rules.fn.toAlphabetizedArray = function() {
 	var clean = function(input) {
 		return input.replace(/[^a-zA-Z0-9]/g, "").toLowerCase();
 	}
-	this.items.sort(function(a,b) {
+	return this.toArray().sort(function(a,b) {
 		if (a.domain && b.domain) {
 			return clean(a.domain) >= clean(b.domain) ? 1 : -1;
 		}
@@ -180,8 +192,8 @@ Rules.fn.alphabetize = function() {
 };
 
 Rules.fn.toString = function() {
-	return this.items.filter(function(item) {
-		return !item.deleted;
+	return this.toArray().filter(function(item) {
+		return item.active;
 	}).join("|");
 };
 
@@ -221,8 +233,8 @@ RulesView.fn = RulesView.prototype;
 
 RulesView.fn.render = function() {
 	this.el.innerHTML = "";
-	this.model.items.forEach(function(model) {
-		if (!model.deleted) {
+	this.model.toAlphabetizedArray().forEach(function(model) {
+		if (model.active) {
 			var view = new RuleView({
 				model: model
 			})
