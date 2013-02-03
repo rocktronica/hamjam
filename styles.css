@@ -51,7 +51,6 @@ input, textarea {
 }
 
 input {
-    line-height: 32px;
     height: 32px;
     padding: 0 10px;
     background: #eee;
@@ -78,6 +77,13 @@ input:active {
     box-shadow: none;
     outline: 1px dotted #63e5ff;
 }
+
+::-webkit-input-placeholder { color: #ccc; }
+::-moz-placeholder { color: #ccc; }
+:-ms-input-placeholder { color: #ccc; }
+*:-moz-placeholder { color: #ccc; }
+*::-moz-focus-inner { border-color: transparent; }
+
 
 textarea {
     width: 100%;
