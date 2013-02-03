@@ -2,6 +2,7 @@
     margin: 0;
     padding: 0;
     box-sizing: border-box;
+    color: inherit;
 }
 
 html {
@@ -11,13 +12,14 @@ html {
 body {
     max-width: 600px;
     margin: 0 auto;
+    color: #333;
 }
 
 body, input, textarea {
     font: 14px/20px sans-serif;
 }
 
-header, h2, pre, p, section {
+header, h2, pre, p {
     margin: 0 0 15px;
 }
 
@@ -25,8 +27,13 @@ header h1 {
     font-size: 50px;
 }
 
+header h1 a {
+    text-decoration: none;
+}
+
 header small {
     opacity: .5;
+    font-size: 12px;
 }
 
 header * {
@@ -35,17 +42,28 @@ header * {
     line-height: 50px;
 }
 
+section {
+    margin: 0 0 30px;
+}
+
 input, textarea {
     border: 1px solid #ccc;
 }
 
 input {
-    padding: 5px 10px;
+    line-height: 32px;
+    height: 32px;
+    padding: 0 10px;
     background: #eee;
     border-radius: 4px;
     cursor: pointer;
     margin-right: 10px;
     display: inline-block;
+    box-shadow: inset 0 1px #fff, inset 0 -10px 20px #ddd;
+    text-shadow: 0 1px #fff;
+    -webkit-transition: all .2s ease;
+    -moz-transition: all .2s ease;
+    transition: all .2s ease;
 }
 
 input:hover {
@@ -54,6 +72,11 @@ input:hover {
 
 input:active {
     background: #ddd;
+}
+
+*:focus {
+    box-shadow: none;
+    outline: 1px dotted #63e5ff;
 }
 
 textarea {
@@ -116,4 +139,9 @@ td.favicon img {
 
 nav a {
     opacity: .25;
+}
+
+footer {
+    opacity: .5;
+    font-size: 12px;
 }
