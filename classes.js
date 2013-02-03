@@ -69,7 +69,7 @@ Rules.fn.toAlphabetizedArray = function() {
 };
 
 Rules.fn.toString = function() {
-    return this.toArray().filter(function(item) {
+    return this.toAlphabetizedArray().filter(function(item) {
         return item.active;
     }).join("|");
 };
