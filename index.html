@@ -17,44 +17,44 @@
 
 <main>
     <section data-element="section">
-    	<h2>Step 1: Input</h2>
-    	<p>In gmail, navigate to <strong>Settings</strong> > <strong>Filters</strong>, click <strong>Edit</strong> by your ham filter, then copy its <strong>From</strong> field's value and paste it below.</p>
-    	<p>
-	        <textarea data-element="input" placeholder="*@lorem.com|user@*.ipsum.com|*@*.ipsum.net|et@cete.ra"></textarea>
-	    </p>
-	    <nav>
-	        <input type="button" value="Next" data-nav="next" />
-	    </nav>
+        <h2>Step 1: Input</h2>
+        <p>In gmail, navigate to <strong>Settings</strong> > <strong>Filters</strong>, click <strong>Edit</strong> by your ham filter, then copy its <strong>From</strong> field's value and paste it below.</p>
+        <p>
+            <textarea data-element="input" placeholder="*@lorem.com|user@*.ipsum.com|*@*.ipsum.net|et@cete.ra"></textarea>
+        </p>
+        <nav>
+            <input type="button" value="Next" data-nav="next" />
+        </nav>
     </section>
 
     <section data-element="section">
-    	<h2>Step 2: Maintenance</h2>
-    	<p>Now, remove the ones you no longer need.</p>
-    	<section class="table-scroll">
-	    	<table>
-    			<thead>
-    				<th colspan="2">Domain</th>
-    				<th>Local</th>
-    				<th></th>
-    			</thead>
-					<tbody data-element="rules"></tbody>
-				</table>
-			</section>
-			<nav>
-	        <input type="button" value="Next" data-nav="next" />
-	        <a href="#" data-nav="back">Back</a>
-	    </nav>
+        <h2>Step 2: Maintenance</h2>
+        <p>Now, remove the ones you no longer need.</p>
+        <section class="table-scroll">
+            <table>
+                <thead>
+                    <th colspan="2">Domain</th>
+                    <th>Local</th>
+                    <th></th>
+                </thead>
+                    <tbody data-element="rules"></tbody>
+                </table>
+            </section>
+            <nav>
+            <input type="button" value="Next" data-nav="next" />
+            <a href="#" data-nav="back">Back</a>
+        </nav>
     </section>
 
     <section data-element="section">
-    	<h2>Step 3: Output</h2>
-    	<p>All done; your ham filter has been alphebetized and cleaned up! Copy this, paste it back into gmail, and continue on with your life.</p>
-    	<p>
-	        <textarea data-element="output"></textarea>
-	    </p>
-	    <nav>
-	        <a href="#" data-nav="back">Back</a>
-	    </nav>
+        <h2>Step 3: Output</h2>
+        <p>All done; your ham filter has been alphebetized and cleaned up! Copy this, paste it back into gmail, and continue on with your life.</p>
+        <p>
+            <textarea data-element="output"></textarea>
+        </p>
+        <nav>
+            <a href="#" data-nav="back">Back</a>
+        </nav>
     </section>
 </main>
 
@@ -65,44 +65,44 @@ var rules = new Rules(); // for console
 
 (function() {
 
-	var sectionElements = document.querySelectorAll("[data-element='section']");
+    var sectionElements = document.querySelectorAll("[data-element='section']");
 
-	var inputSectionView = new SectionView({
-		el: sectionElements[0],
-		onShow: function() {
-			this.el.querySelector("[data-element='input']").value = localStorage.input || "";
-		},
-		onHide: function() {
-			var value = this.el.querySelector("[data-element='input']").value;
-			localStorage.input = value || "";
-			rules.parseInputString(value);
-			return this;
-		}
-	}).render().show();
+    var inputSectionView = new SectionView({
+        el: sectionElements[0],
+        onShow: function() {
+            this.el.querySelector("[data-element='input']").value = localStorage.input || "";
+        },
+        onHide: function() {
+            var value = this.el.querySelector("[data-element='input']").value;
+            localStorage.input = value || "";
+            rules.parseInputString(value);
+            return this;
+        }
+    }).render().show();
 
-	var maintenanceSectionView = new SectionView({
-		el: sectionElements[1],
-		onShow: function() {
-			var rulesView = new RulesView({
-				el: document.querySelector("[data-element='rules']"),
-				model: rules
-			}).render();
-			return this;
-		}
-	}).render().hide();
+    var maintenanceSectionView = new SectionView({
+        el: sectionElements[1],
+        onShow: function() {
+            var rulesView = new RulesView({
+                el: document.querySelector("[data-element='rules']"),
+                model: rules
+            }).render();
+            return this;
+        }
+    }).render().hide();
 
-	var outputSectionView = new SectionView({
-		el: sectionElements[2],
-		onShow: function() {
-			this.el.querySelector("[data-element='output']").value = rules.toString();
-			return this;
-		}
-	}).render().hide();
+    var outputSectionView = new SectionView({
+        el: sectionElements[2],
+        onShow: function() {
+            this.el.querySelector("[data-element='output']").value = rules.toString();
+            return this;
+        }
+    }).render().hide();
 
-	inputSectionView.sectionNext = maintenanceSectionView;
-	maintenanceSectionView.sectionBack = inputSectionView;
-	maintenanceSectionView.sectionNext = outputSectionView;
-	outputSectionView.sectionBack = maintenanceSectionView;
+    inputSectionView.sectionNext = maintenanceSectionView;
+    maintenanceSectionView.sectionBack = inputSectionView;
+    maintenanceSectionView.sectionNext = outputSectionView;
+    outputSectionView.sectionBack = maintenanceSectionView;
 }());
 </script>
 
