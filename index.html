@@ -65,11 +65,10 @@
 <script src="classes.js"></script>
 <script src="views.js"></script>
 <script>
-var rules = new Rules(); // for console
-
 (function() {
 
-    var sectionElements = document.querySelectorAll("[data-element='section']");
+    var rules = new Rules(),
+        sectionElements = document.querySelectorAll("[data-element='section']");
 
     var inputSectionView = new SectionView({
         el: sectionElements[0],
